@@ -1,0 +1,123 @@
+#Template
+ggplot(data=<DATA>)+
+  <GEOM_FUNCTION>(
+    mapping=aes(<MAPPING>),
+    stat=<STAT>,
+    position=<POSITION>)+
+  <COORDINATE_FUNCTION>+
+  <FACET_FUNCTION>
+
+#basic information  
+str(myData)
+#number of rows
+nrow(myData)
+  
+#first six variables  
+head(myData)
+#last six variable
+tail(myData)
+
+tally(myData$region)
+tally(~ region, data = myData)
+tally(~ myData$investments, format = 'percent')
+
+myData$household3group <- ntile(myData$household, n =3) # Create 3 groups
+myData$household3group <- factor(myData$household3group, levels = c(1, 2, 3), labels = c("Small", "Medium", "Large"))
+
+filter_dat <- filter(myData, age != "NA")
+
+nrow(myData) - nrow(filter_dat)
+
+hist(filter_dat$age)
+filter_dat %>%
+  gf_histogram(~age, fill='red')
+  gf_histogram(myData, fill=~income)
+sample(filter_dat, size = 10)
+
+barplot()
+  
+hist.data <- sample(filter_dat, size = 10)
+hist(hist.data$age)
+
+filter_dat$income3 <- ntile(filter_dat$income, n =3)# makes 3 groups
+filter_dat$income3 <- factor(filter_dat$income3, levels = c(1,2,3), labels = c("Low", "Average", "High"))
+
+aggregate(hoursPerWeek ~ region, myData, FUN = mean)
+aggregate(hoursPerWeek ~ region, myData, FUN = sd)
+
+aggregate(hoursPerWeek ~ age, myData, FUN = mean)
+aggregate(hoursPerWeek ~ age, myData, FUN = sd)
+
+aggregate(hoursPerWeek ~ income, myData, FUN = mean)
+aggregate(hoursPerWeek ~ income, myData, FUN = sd)
+
+favestat(data)
+
+gf_histogram(~Thumb, data = Fingers, fill = ~Sex)%>%
+gf_refine(scale_fill_manual(values = c("purple", "orange")))
+
+gf_histogram(~ Thumb, data = Fingers) %>% 
+gf_facet_grid(. ~ Sex) #or (Sex ~ .)
+
+tally(WtLost ~ Condition, data = MindsetMatters, format = "proportion")
+
+# Use ntile() to cut Height into groups
+Fingers$Height2Group <- ntile(Fingers$Height, 2)
+
+# This prints out the first 6 observations of Height and Height2Group
+head(select(Fingers, Height, Height2Group))
+
+Fingers$Height2Group <- factor(Fingers$Height2Group, levels = c(1,2), labels = c("short", "tall"))
+
+# Create a scatterplot of Thumb by Height2Group
+gf_point(Thumb ~ Height2Group, data = Fingers)
+
+# Create boxplots of Thumb by Height2Group
+gf_boxplot(Thumb ~ Height2Group, data = Fingers)
+
+# Modify this code to break Height into 3 categories: "short", "medium", and "tall"
+Fingers$Height3Group <- ntile(Fingers$Height, 3)
+Fingers$Height3Group <- factor(Fingers$Height3Group, levels = 1:3, labels = c("short", "medium", "tall"))
+
+# Create a scatterplot of Thumb by Height3Group
+gf_point(Thumb ~ Height3Group, data = Fingers)
+# Create boxplots of Thumb by Height3Group
+gf_boxplot(Thumb ~ Height3Group, data = Fingers)
+
+# create a scatterplot of Thumb by Height
+gf_point(Thumb ~ Height, data = Fingers)
+
+# create density histograms in a facet grid for RandomGroups2
+gf_dhistogram(~ Tip, data = Tables) %>% gf_facet_grid(RandomGroups2 ~ .)
+
+f_histogram(~Thumb, data = TinyFingers) %>%
+    gf_vline(xintercept = ~mean, color = "blue", data = TinyThumb.stats)
+    
+gf_histogram(~Thumb, data = TinyFingers) %>%
+    gf_vline(xintercept = ~mean, color = "blue", data = TinyThumb.stats)
+    
+    VARIANCE
+  Variance(Deviation) of each value from the mean 
+	---> sum of the absolute variance of those values 
+		---> Square the sum of the absolute variances (deviations) = Sum of squares (SS)
+			---> Mean Squared Error (MSE) = SS/n-1 (where n= total sample size)
+				--> Standard Deviation (Sigma) = ???(MSE)
+				
+airbnb_data$room_type <- ntile(airbnb_data$room_type, n = 2)
+airbnb_data$room_type <- as.numeric(airbnb_data$room_type, levels = c("Private Room", "Entire home/apt"), labels =c(0, 1))
+
+dat.filt.stats <- favstats(price ~ room_type, data = dat.filt)
+dat.filt.stats
+xpnorm(275, mean = dat.filt.stats$mean[1], sd = dat.filt.stats$sd[1], alpha=.3) #home
+xpnorm(275, mean = dat.filt.stats$mean[2], sd = dat.filt.stats$sd[2], alpha=.3) #room
+
+# what proportion of the simulated means are less than 59 mm?
+tally(~mean < 59, data = SDoM)
+
+# make a histogram that would show this
+gf_histogram(~mean, data = SDoM, fill = ~mean < 59)
+
+gf_histogram(~mean, data = simSDoMlower) %>% gf_vline(xintercept = 58.7, color = "darkorange3") %>% gf_vline(xintercept = Thumb.stats$mean, color = "black") %>% gf_labs(title = "Lower Bound Sampling Distribution of the Mean")
+
+# This generates and plots a sampling distribution of 1000 bootstrapped means.
+bootSDoM <- do(1000) * mean(resample(Fingers$Thumb, 157))
