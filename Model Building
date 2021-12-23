@@ -58,3 +58,11 @@ confint(texture.model, level = .95)
 confint(texture.model, level = .75)
 #d
 supernova(texture.model)
+
+#MULTIPLE REGRESSION MODEL
+
+mulReg <- lm(Chance.of.Admit~Research+CGPA+LOR+SOP, data = dat)
+
+supernova(mulReg)
+
+confint(mulReg)
