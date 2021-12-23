@@ -66,3 +66,8 @@ mulReg <- lm(Chance.of.Admit~Research+CGPA+LOR+SOP, data = dat)
 supernova(mulReg)
 
 confint(mulReg)
+
+#PREDICTING
+
+predict(mulReg, dat[234,])
+predict(mulReg, dat[128,])
