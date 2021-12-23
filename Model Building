@@ -7,7 +7,7 @@ favstats(dat$perimeter_mean)
 favstats(dat$texture_mean)
 #1 b
 gf_boxplot(perimeter_mean ~ diagnosis, data = dat, color = ~diagnosis)%>%
-  gf_labs(title="Boxplot of Perimeter_mean vs Diagnosis")
+gf_labs(title="Boxplot of Perimeter_mean vs Diagnosis")
 tally(~diagnosis, data = dat)
 
 aggregate(perimeter_mean ~ diagnosis, data = dat, FUN = mean)
@@ -47,7 +47,7 @@ cohen.d(perimeter_mean ~ diagnosis, data = dat, confin.level =.99)
 texture.model <- lm(perimeter_mean ~ texture_mean, data =dat)
 summary(texture.model)
 supernova(texture.model)
-#b & c
+
 textureBoot <- do(1000)*lm(perimeter_mean ~ texture_mean, data = resample(dat, 569))
 textureBoot
 favstats(textureBoot$texture_mean)
@@ -56,7 +56,7 @@ confint(textureBoot, level = .75)
 
 confint(texture.model, level = .95)
 confint(texture.model, level = .75)
-#d
+
 supernova(texture.model)
 
 #MULTIPLE REGRESSION MODEL
