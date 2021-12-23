@@ -1,0 +1,60 @@
+#DESCRIPTIVE STATISTICS
+
+gf_histogram(~perimeter_mean, data = dat)
+gf_histogram(~texture_mean, data = dat)
+
+favstats(dat$perimeter_mean)
+favstats(dat$texture_mean)
+#1 b
+gf_boxplot(perimeter_mean ~ diagnosis, data = dat, color = ~diagnosis)%>%
+  gf_labs(title="Boxplot of Perimeter_mean vs Diagnosis")
+tally(~diagnosis, data = dat)
+
+aggregate(perimeter_mean ~ diagnosis, data = dat, FUN = mean)
+aggregate(perimeter_mean ~ diagnosis, data = dat, FUN = sd)
+
+#CORRELATION
+
+cor(perimeter_mean ~ texture_mean, data = dat)
+
+cor.test(perimeter_mean ~ texture_mean, data = dat, conf.level = .95)
+
+cor.test(perimeter_mean ~ texture_mean, data = dat, conf.level = .75
+
+#EMPTY MODEL -empty model for perimeter_mean
+
+empty_model <-  lm(perimeter_mean ~ NULL, data = dat)
+summary(empty_model)
+
+supernova(empty_model)
+
+confint(empty_model, level =.95)
+
+#LINEAR MODEL - linear model with perimeter_mean as the outcome and diagnosis as the explanatory variable.
+
+diagModel <- lm(perimeter_mean ~ diagnosis, data = dat)
+summary(diagModel)
+diagModel
+supernova(diagModel)
+
+confint(diagModel, level =.95)
+confint(diagModel, level =.99)
+
+cohen.d(perimeter_mean ~ diagnosis, data = dat, confin.level =.99)
+
+#LINEAR MODEL - linear model with perimeter_mean as the outcome and texture_mean as the explanatory variable.
+
+texture.model <- lm(perimeter_mean ~ texture_mean, data =dat)
+summary(texture.model)
+supernova(texture.model)
+#b & c
+textureBoot <- do(1000)*lm(perimeter_mean ~ texture_mean, data = resample(dat, 569))
+textureBoot
+favstats(textureBoot$texture_mean)
+confint(textureBoot, level = .95)
+confint(textureBoot, level = .75)
+
+confint(texture.model, level = .95)
+confint(texture.model, level = .75)
+#d
+supernova(texture.model)
