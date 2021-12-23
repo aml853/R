@@ -4,7 +4,7 @@ bootSDoM <- do(n) * mean(resample(MyData$Var1, n)
 
 gf_histogram(~mean, data=bootSDoM)
 
-# This code finds the confidence interval from a simulated sampling distribution.
+# This code finds the confidence interval from the bootstrapped sampling distribution.
 arrange(bootSDoM, desc(mean))
 bootSDoM$mean[25]
 bootSDoM$mean[975]
