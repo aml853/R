@@ -5,7 +5,7 @@ gf_histogram(~texture_mean, data = dat)
 
 favstats(dat$perimeter_mean)
 favstats(dat$texture_mean)
-#1 b
+
 gf_boxplot(perimeter_mean ~ diagnosis, data = dat, color = ~diagnosis)%>%
 gf_labs(title="Boxplot of Perimeter_mean vs Diagnosis")
 tally(~diagnosis, data = dat)
