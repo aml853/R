@@ -10,3 +10,8 @@ bootSDoM$mean[25]
 bootSDoM$mean[975]
 
 gf_dist(“norm”, color=’darkorange”, params=list(mean(bootSDoM$mean), sd(bootSDoM$mean)))
+
+
+#RANDOM FORESTS (REGRESSION)
+
+rf <- randomForest(Chance.of.Admit~., data = MyData, mtry = 2,importanc = TRUE, Proximity = TRUE)
